@@ -1,0 +1,18 @@
+body {
+  background-color: rgb(149, 158, 158);
+  color: rgb(228, 225, 225);
+  font-family: fantasy;
+  text-align: center;
+}
+
+.character-name {
+  font-family: inherit;
+  background-color: black;
+  border: none;
+  color: rgb(228, 225, 225);
+  padding: 15px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
