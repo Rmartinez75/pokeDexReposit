@@ -1,7 +1,6 @@
-//List of pokemon with some of their attributes using an IIFE
 var pokemonRepository = (function () {
   var pokemonList = [];
-  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=148';
 
   //Function to validates wether item is an object. If so adds to array
   function add(item) {
@@ -19,23 +18,59 @@ var pokemonRepository = (function () {
 
   //Function to display the array of pokemon onto the DOM as buttons
   function addListItem(pokemon) {
-    var character = $('.character-list');
-    var listItem = $('<li></li>');
-    var button = $(
-      '<button class="character-name">' + pokemon.name + '</button>'
-    );
-    listItem.append(button);
-    character.append(listItem);
-    button.on('click', function (event) {
-      showDetails(pokemon);
+    pokemonRepository.loadDetails(pokemon).then(function () {
+      var character = $('.character-list');
+      var button = $(
+        '<button type="button" class="list-group-item list-group-item-action col-3" data-toggle="modal" data-target="#exampleModal">' +
+          pokemon.name +
+          '</button>'
+      );
+      character.append(button);
+      button.on('click', function (event) {
+        showDetails(pokemon);
+      });
     });
   }
 
   //Function to log the pokemon to console
   function showDetails(pokemon) {
     pokemonRepository.loadDetails(pokemon).then(function () {
-      // console.log(pokemon);
+      console.log(pokemon);
       showModal(pokemon);
+    });
+  }
+
+  //Function to show the bootstraps modal with image
+  function showModal(pokemon) {
+    pokemonRepository.loadDetails(pokemon).then(function () {
+      var modalTitle = $('.modal-title');
+      var modalBody = $('.modal-body');
+      var imageFront = $('<img class="modal-img" style="width:25%">');
+      var imageBack = $('<img class="modal-img" style="width:25%">');
+      //Clears the modal after every time you close modal
+      modalTitle.empty();
+      modalBody.empty();
+      //creating element for height in modal content
+      var heightElement = $('<p>' + 'Height : ' + pokemon.height + '</p>');
+      //creating element for weight in modal content
+      var weightElement = $('<p>' + 'Weight : ' + pokemon.weight + '</p>');
+      //creating element for type in modal content
+      var typesElement = $('<p>' + 'Types : ' + pokemon.types + '</p>');
+      //creating element for abilities in modal content
+      var abilitiesElement = $(
+        '<p>' + 'Abilities : ' + pokemon.abilities + '</p>'
+      );
+      //Retrieves front and back images from API
+      imageFront.attr('src', pokemon.imageUrl);
+      imageBack.attr('src', pokemon.imageUrlBack);
+
+      modalTitle.append(imageFront);
+      modalTitle.append(pokemon.name);
+      modalTitle.append(imageBack);
+      modalBody.append(heightElement);
+      modalBody.append(weightElement);
+      modalBody.append(typesElement);
+      modalBody.append(abilitiesElement);
     });
   }
 
@@ -65,9 +100,8 @@ var pokemonRepository = (function () {
         item.imageUrl = response.sprites.front_default;
         item.imageUrlBack = response.sprites.back_default;
         item.height = response.height;
-
-        item.types = [];
         //Iterates through types array and pushes to item.types array
+        item.types = [];
         for (var i = 0; i < response.types.length; i++) {
           item.types.push(response.types[i].type.name);
         }
@@ -85,82 +119,6 @@ var pokemonRepository = (function () {
       });
   }
 
-  //Creates the Modal and all funcionality
-  function showModal(pokemon) {
-    var $modalContainer = $('#modal-container');
-    $modalContainer.empty();
-
-    //Creates div tag in DOM
-    var modal = $('<div class="modal"></div>');
-
-    //Creates the close button and gives it functionality
-    var closeButtonElement = $('<button class="modal-close">Close</button>');
-    closeButtonElement.on('click', hideModal);
-
-    //Creates h1 tag in DOM and inputs pokemon name as text
-    var nameElement = $('<h1>' + pokemon.name + '</h1>');
-
-    //Creates img tag in DOM and puts in pokemon img
-    var imageElement = $('<img class="modal-img">');
-    imageElement.attr('src', pokemon.imageUrl);
-
-    var imageElementBack = $('<img class="modal-img-back">');
-    imageElementBack.attr('src', pokemon.imageUrlBack);
-
-    //Creates a paragraph tag in DOM for the height
-    var heightElement = $('<p>' + 'Height: ' + pokemon.height + '</p>');
-
-    //Creates a paragraph tag in DOM for the weight
-    var weightElement = $('<p>' + 'Weight: ' + pokemon.weight + '</p>');
-
-    //Creates a paragraph tag in DOM for the type
-    var typesElement = $('<p>' + 'Types: ' + pokemon.types + '</p>');
-
-    //Creates a paragraph tag in DOM for the abilities
-    var abilitiesElement = $(
-      '<p>' + 'Abilities: ' + pokemon.abilities + '</p>'
-    );
-
-    //Puts elemenst into div
-    modal.append(closeButtonElement);
-    modal.append(nameElement);
-    modal.append(imageElement);
-    modal.append(imageElementBack);
-    modal.append(heightElement);
-    modal.append(weightElement);
-    modal.append(typesElement);
-    modal.append(abilitiesElement);
-    $modalContainer.append(modal);
-    //Adds class to show the modal
-    $modalContainer.addClass('is-visible');
-  }
-
-  //Hides modal when click close button
-  function hideModal() {
-    var $modalContainer = $('#modal-container');
-    $modalContainer.removeClass('is-visible');
-  }
-
-  //Hides modal when click ESC
-  jQuery(window).on('keydown', function (e) {
-    var $modalContainer = document.querySelector('#modal-container');
-    if (
-      e.key === 'Escape' &&
-      $modalContainer.classList.contains('is-visible')
-    ) {
-      hideModal();
-    }
-  });
-
-  //Hides modal if clicked outside of it
-  var $modalContainer = document.querySelector('#modal-container');
-  $modalContainer.addEventListener('click', (e) => {
-    var target = e.target;
-    if (target === $modalContainer) {
-      hideModal();
-    }
-  });
-
   //Returns all functions
   return {
     add: add,
@@ -168,8 +126,6 @@ var pokemonRepository = (function () {
     addListItem: addListItem,
     loadList: loadList,
     loadDetails: loadDetails,
-    showModal: showModal,
-    hideModal: hideModal,
   };
 })();
 

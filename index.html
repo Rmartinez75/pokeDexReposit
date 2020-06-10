@@ -3,31 +3,101 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PokeDex</title>
 
+    <!--Link to Bootstrap CDN-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!--Link to favicon-->
     <link rel="shortcut icon" href="favicomatic/favicon.ico" />
+    <!--Link to normalize CSS-->
     <link rel="stylesheet" href="css/normalize.css" />
+    <!--Link to my style CSS-->
     <link rel="stylesheet" href="css/styles.css" />
-
-    <title>Pokedex</title>
   </head>
   <body>
-    <div class="grid">
-      <img src="img/Pikachu.svg" class="img-align" alt="Pokemon Logo" />
+    <!--Navigation code with title of page and logo-->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          src="img/Pikachu.svg"
+          width="50"
+          height="50"
+          class="d-inline-block align-top"
+          alt=""
+        />
+        PokeDex
+      </a>
+    </nav>
 
-      <h1 id="separate-to-align">Pokedex</h1>
-
-      <ul class="character-list"></ul>
+    <!--Bootstrap Modal code-->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <!--Div that holds the Modal container-->
+        <div class="modal-content">
+          <!--Div for Modal header holding the pokemon name, images and close button-->
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--Div for the pokemon stats-->
+          <div class="modal-body">
+            ...
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="modal-container"></div>
+    <!--Div with the page content which is linked to the Javascripe/jQuery-->
+    <div class="list-group container">
+      <div
+        class="btn-group row character-list"
+        role="group"
+        aria-label="First group"
+        style="width: 1180px;"
+      ></div>
+    </div>
 
+    <!--Polyfill/Fetch js links-->
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch.umd.js"></script>
+    <!--jQuery CDB link-->
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+    <!--Popper CDN link-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <!--Bootstrap-Javascript CDN link-->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!--Link to my Javascript-->
     <script src="js/scripts.js"></script>
   </body>
 </html>
