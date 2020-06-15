@@ -17,63 +17,81 @@
     <!--Link to normalize CSS-->
     <link rel="stylesheet" href="css/normalize.css" />
     <!--Link to my style CSS-->
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="dist/styles.css" />
   </head>
   <body>
-    <!--Navigation code with title of page and logo-->
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img
-          src="img/Pikachu.svg"
-          width="50"
-          height="50"
-          class="d-inline-block align-top"
-          alt=""
-        />
-        PokeDex
-      </a>
-    </nav>
-
-    <!--Bootstrap Modal code-->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <!--Div that holds the Modal container-->
-        <div class="modal-content">
-          <!--Div for Modal header holding the pokemon name, images and close button-->
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
+    <div class="container grid grid_item">
+      <!--Navigation code with logo and links to portfolio and source code-->
+      <div>
+        <nav>
+          <a class="navbar-brand nav-background" href="#"
+            ><img
+              src="img/Pikachu.svg"
+              width="75"
+              height="75"
+              class="d-inline-block align-top"
+              alt=""
+            />
+            <a class="nav-links" href="">Home</a>
+            <a
+              class="nav-links"
+              href="https://github.com/Rmartinez75/pokeDexReposit"
+              target="blank"
+              >Source Code</a
             >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <!--Div for the pokemon stats-->
-          <div class="modal-body">
-            ...
+            <a
+              class="nav-links"
+              href="https://rmartinez75.github.io/portfolio_website/"
+              target="blank"
+              >Developer</a
+            >
+          </a>
+        </nav>
+      </div>
+
+      <!--Div with title-->
+      <div class="top-title">
+        <h1>
+          PokeDex
+        </h1>
+      </div>
+
+      <!--Bootstrap Modal code-->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <!--Div that holds the Modal container-->
+          <div class="modal-content">
+            <!--Div for Modal header holding the pokemon name, images and close button-->
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"></h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!--Div for the pokemon stats-->
+            <div class="modal-body">
+              ...
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!--Div with the page content which is linked to the Javascripe/jQuery-->
-    <div class="list-group container">
-      <div
-        class="btn-group row character-list"
-        role="group"
-        aria-label="First group"
-        style="width: 1180px;"
-      ></div>
+      <!--Div with the page content which is linked to the Javascripe/jQuery-->
+      <div class="container">
+        <div class="row"></div>
+      </div>
     </div>
 
     <!--Polyfill/Fetch js links-->
@@ -98,6 +116,6 @@
       crossorigin="anonymous"
     ></script>
     <!--Link to my Javascript-->
-    <script src="js/scripts.js"></script>
+    <script src="dist/scripts.js"></script>
   </body>
 </html>

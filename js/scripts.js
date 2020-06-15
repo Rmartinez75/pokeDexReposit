@@ -19,13 +19,24 @@ var pokemonRepository = (function () {
   //Function to display the array of pokemon onto the DOM as buttons
   function addListItem(pokemon) {
     pokemonRepository.loadDetails(pokemon).then(function () {
-      var character = $('.character-list');
+      var row = $('.row');
+      var card = $(
+        '<div class="card" style="width: 24%; height: 70px;"></div>'
+      );
+      var cardImage = $(
+        '<img class="card-img-top" style="width: 18%; height: 50%;" />'
+      );
+      var cardBody = $('<div class="card-body"></div>');
       var button = $(
-        '<button type="button" class="list-group-item list-group-item-action col-3" data-toggle="modal" data-target="#exampleModal">' +
+        '<button type="button" class="btn " data-toggle="modal" data-target="#exampleModal">' +
           pokemon.name +
           '</button>'
       );
-      character.append(button);
+      cardImage.attr('src', pokemon.imageUrl);
+      row.append(card);
+      card.append(cardBody);
+      cardBody.append(cardImage);
+      cardBody.append(button);
       button.on('click', function (event) {
         showDetails(pokemon);
       });
@@ -93,26 +104,56 @@ var pokemonRepository = (function () {
   }
 
   //Function breaks down details in the pokemonList to display specific things
-  function loadDetails(item) {
-    var url = item.detailsUrl;
+  function loadDetails(pokemon) {
+    var url = pokemon.detailsUrl;
     return $.ajax(url)
       .then(function (response) {
-        item.imageUrl = response.sprites.front_default;
-        item.imageUrlBack = response.sprites.back_default;
-        item.height = response.height;
-        //Iterates through types array and pushes to item.types array
-        item.types = [];
+        pokemon.imageUrl = response.sprites.front_default;
+        pokemon.imageUrlBack = response.sprites.back_default;
+        pokemon.height = response.height;
+
+        //Iterates through types array and pushes to pokemon.types array
+        pokemon.types = [];
         for (var i = 0; i < response.types.length; i++) {
-          item.types.push(response.types[i].type.name);
+          pokemon.types.push(response.types[i].type.name);
+        }
+        if (pokemon.types.includes('grass')) {
+          $('.modal').css('background', 'rgba(12, 78, 3, 0.4)');
+        } else if (pokemon.types.includes('psychic')) {
+          $('.modal').css('background', 'rgb(133, 2, 138, 0.5)');
+        } else if (pokemon.types.includes('fire')) {
+          $('.modal').css('background', 'rgb(179, 2, 14, 0.5)');
+        } else if (pokemon.types.includes('bug')) {
+          $('.modal').css('background', 'rgb(70, 57, 2, 0.5)');
+        } else if (pokemon.types.includes('water')) {
+          $('.modal').css('background', 'rgb(5, 5, 236, 0.5)');
+        } else if (pokemon.types.includes('rock')) {
+          $('.modal').css('background', 'rgb(60, 60, 66, 0.5)');
+        } else if (pokemon.types.includes('flying')) {
+          $('.modal').css('background', 'rgb(18, 188, 250, 0.5)');
+        } else if (pokemon.types.includes('ground')) {
+          $('.modal').css('background', 'rgb(83, 22, 22, 0.5)');
+        } else if (pokemon.types.includes('electric')) {
+          $('.modal').css('background', 'rgb(197, 207, 80, 0.5)');
+        } else if (pokemon.types.includes('ice')) {
+          $('.modal').css('background', 'none');
+        } else if (pokemon.types.includes('ghost')) {
+          $('.modal').css('background', 'rgb(205, 205, 212, 0.5)');
+        } else if (pokemon.types.includes('fairy')) {
+          $('.modal').css('background', 'rgb(223, 1, 160, 0.5)');
+        } else if (pokemon.types.includes('steel')) {
+          $('.modal').css('background', 'rgb(80, 100, 102, 0.5)');
+        } else {
+          $('.modal').css('background', 'none');
         }
 
-        //Iterates through abilities array and pushes to item.abilities array
-        item.abilities = [];
+        //Iterates through abilities array and pushes to pokemon.abilities array
+        pokemon.abilities = [];
         for (var i = 0; i < response.abilities.length; i++) {
-          item.abilities.push(response.abilities[i].ability.name);
+          pokemon.abilities.push(response.abilities[i].ability.name);
         }
 
-        item.weight = response.weight;
+        pokemon.weight = response.weight;
       })
       .catch(function (e) {
         console.error(e);
